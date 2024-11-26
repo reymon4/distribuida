@@ -16,7 +16,7 @@ public class RestMain {
     static void handleHola(ServerRequest req, ServerResponse res) {
        var service=  CDI.current().select(PersonaService.class).get();
       var gson=  new GsonBuilder().setPrettyPrinting().create();
-        var persona = service.getPersona(7);
+        var persona = service.getPersona(1);
 
         res.send(gson.toJson(persona));
     }
