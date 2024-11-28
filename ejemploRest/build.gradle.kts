@@ -1,7 +1,8 @@
 plugins {
     id("java")
-    id("application")
+    //id("application")
     id("io.freefair.lombok") version "8.11"
+    id("com.github.johnrengelman.shadow") version "8.1.1" //Plugin que descomprime todos los .jar y los empaqueta en uno solo
 
 }
 
@@ -32,5 +33,20 @@ dependencies {
 sourceSets {
     main {
         output.setResourcesDir( file("${buildDir}/classes/java/main") )
+    }
+}
+tasks.shadowJar{
+}
+tasks.jar {
+    manifest {
+        attributes(
+            mapOf("Main-Class" to "com.distribuida.rh.RestMain",
+                //No necesitamos el classpath porque tenemos el plugin shadow
+                /*"Class-Path" to configurations.runtimeClasspath
+                    .get()
+                    .joinToString(separator = " ") { file ->
+                        "${file.name}"
+                    }*/)
+        )
     }
 }

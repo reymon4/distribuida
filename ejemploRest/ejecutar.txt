@@ -1,0 +1,14 @@
+root: ejemploRest\build\install\ejemploRest
+
+bin: ejemploRest.bat com.distribuida.rh.RestMain
+
+root: java -cp lib/* com.distribuida.rh.RestMain
+
+-----------------------------------------
+Al configurar el classpath en el archivo build.gradle para generar el Manifest, podemos ejecutar el programa con el
+siguiente comando, porque generamos un archivo jar con todas las dependencias incluidas.:
+C:\Users\fing.labcom\Documents\Distribuida\ejercicioClase\ejemploRest\build\install\ejemploRest\lib>java -jar ejemploRest-1.0-SNAPSHOT.jar
+
+También podemos instalar el plugin Shadow que descomprime todos los jar y los empaqueta en uno solo. Además, hay qu
+ eliminar el plugin "application" para que funcione. Para ejecutarlo con el siguiente comando:
+
