@@ -1,4 +1,4 @@
-package com.programacion.distribuida.books.service.dto;
+package com.programacion.distribuida.books.dto;
 
 import jakarta.persistence.Column;
 import lombok.Data;
@@ -16,5 +16,5 @@ public class BookDTO {
 
     private BigDecimal price;
 
-    private Integer authorId;
+    private String author;
 }
