@@ -8,7 +8,9 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Path("/authors")
@@ -19,6 +21,10 @@ import java.util.List;
 public class AuthorRest {
     @Inject
     AuthorRepository repository;
+
+    @Inject
+    @ConfigProperty(name="quarkus.http.port")
+    Integer port;
 
     @GET
     public List<Author> findAll() {
@@ -33,7 +39,11 @@ public class AuthorRest {
         if( obj.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }else{
-            return Response.ok(obj.get()).build();
+            String txt = String.format("[%d]-%s", port, obj.get().getName());
+            var ret = new Author();
+            ret.setId(obj.get().getId());
+            ret.setName(txt);
+            return Response.ok(ret).build();
         }
     }
 
@@ -47,7 +57,6 @@ public class AuthorRest {
     @Path("/{id}")
     public Response update(@PathParam("id") Integer id, Author author) {
         var obj = repository.updateBook(id, author);
-
         if(obj.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }else{

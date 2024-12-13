@@ -38,6 +38,12 @@ dependencies {
 
     implementation("io.quarkus:quarkus-jdbc-postgresql")
     implementation("org.postgresql:postgresql:42.7.4")
+
+    //balanceador
+    //implementation("io.smallrye.stork:stork-service-discovery-static-list")
+
+    implementation("io.smallrye.stork:stork-service-discovery-consul")
+
 }
 
 tasks.withType<JavaCompile> {

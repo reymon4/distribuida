@@ -9,7 +9,9 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 //ANOTACION PARA QUE SEA EL PROXY AUTOMÁTICO
-@RegisterRestClient(configKey ="authors-api")
+//@RegisterRestClient(configKey ="authors-api")
+@RegisterRestClient(baseUri ="stork://authors-api")
+
 public interface AuthorRestClient {
 
     @GET
