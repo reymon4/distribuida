@@ -27,7 +27,7 @@ public class BookRest {
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> update(@PathVariable Integer id, Book book) {
+    public ResponseEntity<Book> update(@PathVariable Integer id,@RequestBody Book book) {
         var bookObj = repository.findById(id);
         if (bookObj == null) {
             return ResponseEntity.notFound().build();
@@ -47,7 +47,7 @@ public class BookRest {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> create(Book book) {
+    public ResponseEntity<Book> create(@RequestBody Book book) {
         repository.save(book);
         return ResponseEntity.ok(book);
     }

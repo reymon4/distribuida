@@ -29,7 +29,7 @@ public class AuthorRest {
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Author> update(@PathVariable Integer id, Author author) {
+    public ResponseEntity<Author> update(@PathVariable Integer id,@RequestBody Author author) {
         var authorObj = repository.findById(id);
         if (authorObj == null) {
             return ResponseEntity.notFound().build();
@@ -49,7 +49,7 @@ public class AuthorRest {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Author> create(Author author) {
+    public ResponseEntity<Author> create(@RequestBody Author author) {
         repository.save(author);
         return ResponseEntity.ok(author);
     }
