@@ -18,6 +18,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 @Transactional
+
 public class AuthorRest {
     @Inject
     AuthorRepository repository;
