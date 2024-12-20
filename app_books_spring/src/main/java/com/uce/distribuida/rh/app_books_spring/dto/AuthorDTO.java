@@ -1,4 +1,4 @@
-package com.programacion.distribuida.books.dto;
+package com.uce.distribuida.rh.app_books_spring.dto;
 
 import lombok.Data;
 

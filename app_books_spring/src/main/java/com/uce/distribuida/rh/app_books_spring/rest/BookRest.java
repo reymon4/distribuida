@@ -1,6 +1,9 @@
 package com.uce.distribuida.rh.app_books_spring.rest;
 
+import com.uce.distribuida.rh.app_books_spring.clients.AuthorRestClient;
 import com.uce.distribuida.rh.app_books_spring.db.Book;
+import com.uce.distribuida.rh.app_books_spring.dto.AuthorDTO;
+import com.uce.distribuida.rh.app_books_spring.dto.BookDTO;
 import com.uce.distribuida.rh.app_books_spring.repo.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,9 +19,23 @@ public class BookRest {
     @Autowired
     private BookRepository repository;
 
+    @Autowired
+    private AuthorRestClient authorRestClient;
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Book>> findAll() {
-        return ResponseEntity.ok(repository.findAll());
+    public ResponseEntity<List<BookDTO>> findAll() {
+        return ResponseEntity.ok(repository.findAll().stream().map(book -> {
+            BookDTO bookDTO = new BookDTO();
+            AuthorDTO author = authorRestClient.findById(book.getAuthorId());
+            System.out.println(author);
+            bookDTO.setId(book.getId());
+            bookDTO.setIsbn(book.getIsbn());
+            bookDTO.setTittle(book.getTittle());
+            bookDTO.setPrice(book.getPrice());
+            bookDTO.setAuthor(author.getName() + " " + author.getLastName());
+            return bookDTO;
+        }).toList());
+
     }
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Book> findById(@PathVariable Integer id) {

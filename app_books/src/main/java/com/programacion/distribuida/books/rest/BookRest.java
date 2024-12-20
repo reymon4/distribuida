@@ -86,7 +86,7 @@ public class BookRest {
             dto.setIsbn(book.getIsbn());
             dto.setTittle(book.getTittle());
             dto.setPrice(book.getPrice());
-            dto.setAuthor(author.getName() + " " + author.getApellido());
+            dto.setAuthor(author.getName() + " " + author.getLastName());
             System.out.println("Libro: "+dto);
             return dto;
 

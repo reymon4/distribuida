@@ -16,5 +16,5 @@ public class Author {
     private String name;
 
     @Column(name = "last_name")
-    private String apellido;
+    private String lastName;
 }
