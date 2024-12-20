@@ -25,6 +25,7 @@ public class AuthorRest {
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Author> findById(@PathVariable Integer id) {
         var author = repository.findById(id);
+        System.out.println("Consultando el autor con id: " + id);
         return author != null ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
     }
 
