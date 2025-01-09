@@ -44,6 +44,12 @@ dependencies {
 
     implementation("io.smallrye.stork:stork-service-discovery-consul")
 
+
+    //Registro
+    implementation("io.smallrye.reactive:smallrye-mutiny-vertx-consul-client")
+
+    //Health -> Actuator de Spring
+    implementation("io.quarkus:quarkus-smallrye-health")
 }
 
 tasks.withType<JavaCompile> {

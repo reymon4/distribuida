@@ -44,6 +44,8 @@ dependencies {
 
     //Discovery
     implementation("io.smallrye.stork:stork-service-discovery-consul")
+//Health -> Actuator de Spring
+    implementation("io.quarkus:quarkus-smallrye-health")
 }
 
 tasks.withType<JavaCompile> {
