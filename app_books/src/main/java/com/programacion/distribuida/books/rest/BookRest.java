@@ -43,6 +43,7 @@ public class BookRest {
 
     @GET
     public List<BookDTO> findAll() {
+        System.out.println("entro a buscar todos los libros");
         //Version 1
         //return repository.findAll().list();
 
@@ -80,7 +81,10 @@ public class BookRest {
         }).toList();*/
         //Version 4 with MP Client Auto
         return  repository.streamAll().map(book -> {
+            System.out.println("Author con id: "+book.getAuthorId());
+
             var author = authorRestClient.findById(book.getAuthorId());
+            System.out.println(author.toString());
             var dto = new BookDTO();
             dto.setId(book.getId());
             dto.setIsbn(book.getIsbn());

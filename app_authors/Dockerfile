@@ -1,3 +1,7 @@
+#docker build -t app_authors .
+#docker build -t docker.io/reymon4/app_authors .
+#docker push reymon4/app_authors
+
 FROM eclipse-temurin:21.0.5_11-jre-alpine
 
 RUN mkdir /app
