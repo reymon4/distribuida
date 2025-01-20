@@ -50,6 +50,10 @@ dependencies {
 
     //Health -> Actuator de Spring
     implementation("io.quarkus:quarkus-smallrye-health")
+
+    //Metrics
+    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
+    implementation("io.quarkus:quarkus-jackson")
 }
 
 tasks.withType<JavaCompile> {
