@@ -1,4 +1,4 @@
-#docker compose -f docker-compose-metrics-author.yml up -d
+#docker compose -f docker-compose-traicing-gateway.yml up -d
 version: '3.3'
 services:
   dbserver:
@@ -16,7 +16,7 @@ services:
       - 5432
   consul:
     image: consul:1.15.4
-    command: |
+    command:
       agent -dev
       -ui
       -bind 0.0.0.0
@@ -35,15 +35,33 @@ services:
       --providers.consulCatalog.endpoint.address=consul:8500
       --providers.docker
       --providers.docker.exposedByDefault=false
+      --tracing=true
+      --tracing.addinternals=false
+      --tracing.otlp=true
+      --tracing.otlp.http=true
+      --tracing.otlp.http.endpoint=http://jeager:4318
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8080:8080"
       - "80:80"
+      #- "8082:8082"
     expose:
       - 80
     depends_on:
       - consul
+  jeager:
+    image: jaegertracing/jaeger:2.2.0
+    ports:
+      - "16686:16686"  #UI
+      - "4317:4317"   #GRPC
+      - "4318:4318"   #HTTP
+    expose:
+      - 16686
+      - 4317
+      - 4318
+    depends_on:
+      - proxy
   authors:
     image: reymon4/app_authors:latest
     labels:
@@ -51,8 +69,8 @@ services:
         - "traefik.http.routers.router-app-authors.rule=PathPrefix(`/app-authors-1`)"
         - "traefik.http.routers.router-app-authors.middlewares=middleware-app-authors-1"
         - "traefik.http.middlewares.middleware-app-authors-1.stripPrefix.prefixes=/app-authors-1"
-    ports:
-      - "7070:8080"
+#    ports:
+#      - "7070:8080"
     expose:
       - 8080
     environment:
@@ -67,16 +85,16 @@ services:
       - dbserver
       - consul
     deploy:
-      replicas: 1
+      replicas: 4
   books:
-    image: reymon4/app_books:latest
+    image: willan98/app_books:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.router-app-books.rule=PathPrefix(`/app-books-1`)"
       - "traefik.http.routers.router-app-books.middlewares=middleware-app-books-1"
       - "traefik.http.middlewares.middleware-app-books-1.stripPrefix.prefixes=/app-books-1"
-    ports:
-      - "7071:8081"
+#    ports:
+#      - "7071:8081"
     expose:
       - 8081
     environment:
@@ -91,28 +109,5 @@ services:
       - dbserver
       - consul
     deploy:
-      replicas: 1
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./configs:/etc/prometheus
-    ports:
-      - "9090:9090"
-    expose:
-        - 9090
-  grafana:
-    image: grafana/grafana-oss
-    ports:
-      - "3000:3000"
-    expose:
-      - 3000
-  postgresql-exporter:
-    image: prometheuscommunity/postgres-exporter
-    ports:
-      - "9187:9187"
-    environment:
-      DATA_SOURCE_URI: "dbserver:5432/distribuida?sslmode=disable"
-      DATA_SOURCE_USER: postgres
-      DATA_SOURCE_PASS: root
-    expose:
-      - 9187
+      replicas: 2
+
