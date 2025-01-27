@@ -81,20 +81,20 @@ services:
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
       QUARKUS_HIBERNATE-ORM_METRICS_ENABLED: true
+      QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: http://jeager:4317
     depends_on:
       - dbserver
       - consul
     deploy:
       replicas: 4
   books:
-    image: willan98/app_books:latest
+    image: reymon4/app_books:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.router-app-books.rule=PathPrefix(`/app-books-1`)"
       - "traefik.http.routers.router-app-books.middlewares=middleware-app-books-1"
       - "traefik.http.middlewares.middleware-app-books-1.stripPrefix.prefixes=/app-books-1"
-#    ports:
-#      - "7071:8081"
+
     expose:
       - 8081
     environment:
@@ -105,6 +105,7 @@ services:
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
       QUARKUS_HIBERNATE-ORM_METRICS_ENABLED: true
+      QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: http://jeager:4317
     depends_on:
       - dbserver
       - consul

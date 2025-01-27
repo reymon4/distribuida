@@ -57,6 +57,11 @@ dependencies {
 
     //TELEMETRY
     implementation("io.quarkus:quarkus-opentelemetry")
+
+    //JDBC
+    
+    //fAULT TOLERANCE
+    implementation("io.quarkus:quarkus-smallrye-fault-tolerance")
 }
 
 tasks.withType<JavaCompile> {

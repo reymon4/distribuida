@@ -12,6 +12,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Path("/authors")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,6 +28,8 @@ public class AuthorRest {
     @ConfigProperty(name="quarkus.http.port")
     Integer port;
 
+    AtomicInteger counter = new AtomicInteger(1);
+
     @GET
     public List<Author> findAll() {
         return repository.findAll().list();
@@ -35,6 +38,11 @@ public class AuthorRest {
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Integer id){
+        int value = counter.getAndIncrement();
+        if(value%5!=0){
+           String msg = String.format("Intento [%d]-%s", value, LocalDateTime.now());
+           throw new RuntimeException(msg);
+        }
         var obj = repository.findByIdOptional(id);
 
         if( obj.isEmpty()){

@@ -106,7 +106,15 @@ public class BookRest {
         if(obj.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         } else {
-            return Response.ok(obj.get()).build();
+            var book = obj.get();
+            var author = authorRestClient.findById(book.getAuthorId());
+            var dto = new BookDTO();
+            dto.setId(book.getId());
+            dto.setIsbn(book.getIsbn());
+            dto.setTittle(book.getTittle());
+            dto.setPrice(book.getPrice());
+            dto.setAuthor(author.getName() + " " + author.getLastName());
+            return Response.ok(dto).build();
         }
     }
 
