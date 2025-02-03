@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app_authors_spring" />
             <option value="$PROJECT_DIR$/app_books" />
             <option value="$PROJECT_DIR$/app_books_spring" />
+            <option value="$PROJECT_DIR$/deployment" />
             <option value="$PROJECT_DIR$/ejemploCDI" />
             <option value="$PROJECT_DIR$/ejemploJPA" />
             <option value="$PROJECT_DIR$/ejemploQuarkus" />
